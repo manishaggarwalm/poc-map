@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { addRole } from '../../actions/roles';
-import InputField from '../form/fields/input';
-import SelectField from '../form/fields/select';
 
 const AddRole = (props) => {
   const [newRole, updateRole] = useState('');
+  const [newStatus, updateStatus] = useState('Active');
 
   return (
     <form
@@ -16,15 +15,12 @@ const AddRole = (props) => {
       onSubmit={(event) => {
         event.preventDefault();
         if (newRole) {
-          props.addRole(newRole);
+          props.addRole({ roleName: newRole, status: newStatus });
           updateRole('');
           props.history.push('/');
         }
       }}
     >
-      <InputField label="Name" />
-      <SelectField label="Name" />
-
       <div className="form-group mx-sm-3 mb-2">
         <label htmlFor="Role" className="sr-only">
           Role
@@ -37,6 +33,19 @@ const AddRole = (props) => {
           value={newRole}
           onChange={({ target: { value } }) => updateRole(value)}
         />
+      </div>
+      <div className="form-group mx-sm-3 mb-2">
+        <label htmlFor="Role" className="sr-only">
+          Status
+        </label>
+        <select
+          className="form-control"
+          value={newStatus}
+          onChange={({ target: { value } }) => updateStatus(value)}
+        >
+          <option>Active</option>
+          <option>InActive</option>
+        </select>
       </div>
       <button type="submit" className="btn btn-primary mb-2">
         Create

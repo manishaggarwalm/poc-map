@@ -6,7 +6,7 @@ import Select from 'react-select';
 
 import { updateRole } from '../../actions/roles';
 
-const EditRole = props => {
+const EditRole = (props) => {
   const [newRole, updateRole] = useState('');
 
   const roles = props.roles.map(({ isDeleted, roleId, roleName }) => ({
@@ -17,7 +17,7 @@ const EditRole = props => {
   return (
     <form
       className="form-inline"
-      onSubmit={event => {
+      onSubmit={(event) => {
         event.preventDefault();
         if (newRole) {
           props.updateRole(newRole);

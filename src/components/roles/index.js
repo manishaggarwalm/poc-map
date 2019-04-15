@@ -20,6 +20,12 @@ const Roles = (props) => {
       headerName: 'Role Name',
       sortable: true,
     },
+    {
+      field: 'status',
+      filter: true,
+      headerName: 'Status',
+      sortable: true,
+    },
   ];
 
   const roles = props.roles.filter(({ isDeleted }) => isDeleted === false);

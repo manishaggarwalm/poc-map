@@ -19,16 +19,19 @@ const roles = (state = initialState, { type, payload }) => {
           isDeleted: false,
           roleId: 1,
           roleName: 'Admin',
+          status: 'Active',
         },
         {
           isDeleted: false,
           roleId: 2,
           roleName: 'Super Admin',
+          status: 'Active',
         },
         {
           isDeleted: false,
           roleId: 3,
           roleName: 'User',
+          status: 'Active',
         },
       ],
     };
@@ -40,7 +43,7 @@ const roles = (state = initialState, { type, payload }) => {
       ({ roleId }) => roleId === payload.roleId
     );
 
-    roles[rolesIndex] = payload;
+    roles[rolesIndex] = { ...roles[rolesIndex], ...payload };
 
     return {
       ...state,
@@ -51,7 +54,7 @@ const roles = (state = initialState, { type, payload }) => {
   case DELETE_ROLES_SUCCESS: {
     let roles = [...state.roles];
 
-    roles = roles.map(role => {
+    roles = roles.map((role) => {
       const isDeleted = payload.find(
         ({ role: { roleId: selectedRoleId } }) =>
           role.roleId === selectedRoleId
@@ -78,7 +81,7 @@ const roles = (state = initialState, { type, payload }) => {
         {
           isDeleted: false,
           roleId: state.roles.length + 1,
-          roleName: payload,
+          ...payload,
         },
       ],
     };

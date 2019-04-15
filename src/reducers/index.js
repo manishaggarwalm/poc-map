@@ -3,7 +3,7 @@ import { connectRouter } from 'connected-react-router';
 
 import roles from './roles';
 
-const rootReducer = history =>
+const rootReducer = (history) =>
   combineReducers({
     roles,
     router: connectRouter(history),

@@ -92,7 +92,7 @@ class Map extends Component {
       >
         <DrawingManager
           // onCircleComplete={(a) => console.log(a)}
-          defaultDrawingMode={google.maps.drawing.OverlayType.CIRCLE}
+          // defaultDrawingMode={google.maps.drawing.OverlayType.CIRCLE}
           defaultOptions={{
             circleOptions: {
               clickable: false,
