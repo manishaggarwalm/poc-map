@@ -28,7 +28,9 @@ const Roles = (props) => {
     },
   ];
 
-  const roles = props.roles.filter(({ isDeleted }) => isDeleted === false);
+  const roles = props.componentRoles.filter(
+    ({ isDeleted }) => isDeleted === false
+  );
 
   return (
     <div>
@@ -49,10 +51,17 @@ const Roles = (props) => {
 };
 
 Roles.propTypes = {
-  roles: PropTypes.array.isRequired,
+  componentRoles: PropTypes.arrayOf(
+    PropTypes.shape({
+      isDeleted: PropTypes.bool.isRequired,
+      roleId: PropTypes.number.isRequired,
+      roleName: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
-const mapStateToProps = ({ roles }) => ({ roles: roles.roles });
+const mapStateToProps = ({ roles }) => ({ componentRoles: roles.roles });
 
 export default connect(
   mapStateToProps,

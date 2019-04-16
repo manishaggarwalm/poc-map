@@ -59,9 +59,7 @@ AddRole.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
 };
 
-export default withRouter(
-  connect(
-    null,
-    { addRole }
-  )(AddRole)
-);
+export default connect(
+  null,
+  { addRole }
+)(AddRole);

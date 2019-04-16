@@ -27,9 +27,9 @@ class Map extends Component {
 
   render() {
     const coords = [
-      { lat: 41.85258, lng: -87.65141 },
-      { lat: 41.856795, lng: -87.854298 },
-      { lat: 41.95258, lng: -87.754298 },
+      { lat: 41.85258, lng: -87.35141 },
+      { lat: 41.856795, lng: -87.554298 },
+      { lat: 41.95258, lng: -87.454298 },
     ];
 
     var outerCoords = [
@@ -46,11 +46,19 @@ class Map extends Component {
 
     const MapWithADirectionsRenderer = compose(
       withProps({
-        containerElement: <div style={{ height: '500px' }} />,
+        containerElement: (
+          <div
+            style={{
+              height: '500px',
+              overflow: 'hidden',
+              position: 'relative',
+            }}
+          />
+        ),
         googleMapURL:
           'https://maps.googleapis.com/maps/api/js?key=AIzaSyAyjJq4plBVuf3fzcxnH-UDsMxgnGvS1ms&v=3.exp&libraries=geometry,drawing,places',
-        loadingElement: <div style={{ height: '100%' }} />,
-        mapElement: <div style={{ height: '100%' }} />,
+        loadingElement: <div style={{ height: '100%' }}>Loading</div>,
+        mapElement: <div style={{ height: '100%', width: '70%' }} />,
       }),
       withScriptjs,
       withGoogleMap,
@@ -63,6 +71,7 @@ class Map extends Component {
               destination: new google.maps.LatLng(41.85258, -87.65141),
               optimizeWaypoints: true,
               origin: new google.maps.LatLng(41.85073, -87.954298),
+              provideRouteAlternatives: true,
               travelMode: google.maps.TravelMode.DRIVING,
               waypoints: [
                 {
@@ -96,7 +105,6 @@ class Map extends Component {
           defaultOptions={{
             circleOptions: {
               clickable: false,
-              draggable: true,
               editable: true,
               fillColor: '#ffff00',
               fillOpacity: 1,
@@ -117,6 +125,8 @@ class Map extends Component {
         />
         {props.directions && (
           <DirectionsRenderer
+            editable
+            draggable
             directions={props.directions}
             panel={document.getElementById('panel')}
           />
@@ -148,7 +158,7 @@ class Map extends Component {
         <Circle
           draggable
           editable
-          center={new google.maps.LatLng(41.75073, -87.854298)}
+          center={new google.maps.LatLng(41.75073, -88.15)}
           radius={9000}
           options={{
             fillColor: '#f00',

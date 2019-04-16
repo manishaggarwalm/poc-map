@@ -2,3 +2,14 @@
   padding: 20px 0;
 }
 
+div#panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #fff;
+  width: 30%;
+  padding: 10px;
+  bottom: 0;
+  height: 100%;
+  overflow-y: scroll;
+}
