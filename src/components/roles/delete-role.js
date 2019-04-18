@@ -55,7 +55,7 @@ DeleteRole.propTypes = {
 
 export default withRouter(
   connect(
-    ({ roles }) => ({ roles: roles.roles }),
+    ({ users: { roles } }) => ({ roles: roles.roles }),
     { deleteRoles }
   )(DeleteRole)
 );
