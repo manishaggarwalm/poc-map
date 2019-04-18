@@ -61,7 +61,9 @@ Roles.propTypes = {
   ).isRequired,
 };
 
-const mapStateToProps = ({ roles }) => ({ componentRoles: roles.roles });
+const mapStateToProps = ({ users: { roles } }) => ({
+  componentRoles: roles.roles,
+});
 
 export default connect(
   mapStateToProps,

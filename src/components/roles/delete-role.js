@@ -6,7 +6,7 @@ import Select from 'react-select';
 
 import { deleteRoles } from '../../actions/roles';
 
-const DeleteRole = props => {
+const DeleteRole = (props) => {
   const [selectedRoles, updateSelectedRoles] = useState([]);
 
   const roles = props.roles.map(({ roleId, roleName }) => ({
@@ -18,7 +18,7 @@ const DeleteRole = props => {
   return (
     <form
       className="form-inline"
-      onSubmit={event => {
+      onSubmit={(event) => {
         event.preventDefault();
         props.deleteRoles(selectedRoles);
         updateSelectedRoles([]);
@@ -32,7 +32,7 @@ const DeleteRole = props => {
         <Select
           name="form-field-name"
           value={selectedRoles || []}
-          onChange={value => {
+          onChange={(value) => {
             updateSelectedRoles(value);
           }}
           options={roles}

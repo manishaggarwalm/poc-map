@@ -9,7 +9,7 @@ const initialState = {
   roles: [],
 };
 
-const roles = (state = initialState, { type, payload }) => {
+const users = (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_ROLES_SUCCESS:
       return {
@@ -72,4 +72,4 @@ const roles = (state = initialState, { type, payload }) => {
   }
 };
 
-export default roles;
+export default users;

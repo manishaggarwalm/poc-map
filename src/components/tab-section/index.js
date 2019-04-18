@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import PropTypes from 'react-proptypes';
-import TabTitle from './title';
+
+const TabTitle = lazy(() => import('./title'));
 
 const TabSection = (props) => {
   const { sections } = props;
@@ -47,16 +48,20 @@ const TabSection = (props) => {
           <div className="center-section">
             <div className="innerPage-tabs-wrap">
               <ul className="innerPage-tab-group d-inline-flex">
-                {tabSections.map(({ icon, status, title, tooltip }, index) => (
-                  <TabTitle
-                    key={index}
-                    icon={icon}
-                    status={status}
-                    tooltip={tooltip}
-                    title={title}
-                    onClick={() => resetActiveAndSetCurrentActive(index)}
-                  />
-                ))}
+                <Suspense fallback={<div>Loading</div>}>
+                  {tabSections.map(
+                    ({ icon, status, title, tooltip }, index) => (
+                      <TabTitle
+                        key={index}
+                        icon={icon}
+                        status={status}
+                        tooltip={tooltip}
+                        title={title}
+                        onClick={() => resetActiveAndSetCurrentActive(index)}
+                      />
+                    )
+                  )}
+                </Suspense>
               </ul>
             </div>
           </div>

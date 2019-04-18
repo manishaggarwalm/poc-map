@@ -28,6 +28,6 @@ App.propTypes = {
 };
 
 export default connect(
-  ({ roles }) => ({ roles: roles.roles }),
+  ({ users: { roles } }) => ({ roles: roles.roles }),
   { fetchRoles }
 )(App);

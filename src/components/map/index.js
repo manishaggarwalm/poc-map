@@ -1,7 +1,8 @@
 /*global google*/
 
 import React, { Component } from 'react';
-import { compose, withProps, lifecycle } from 'recompose';
+import PropTypes from 'react-proptypes';
+import { compose, withProps, lifecycle, withState } from 'recompose';
 import {
   withGoogleMap,
   withScriptjs,
@@ -62,8 +63,10 @@ class Map extends Component {
       }),
       withScriptjs,
       withGoogleMap,
+      withState('directions', 'setDirections', null),
       lifecycle({
         componentDidMount() {
+          this._isMounted = true;
           const DirectionsService = new google.maps.DirectionsService();
 
           DirectionsService.route(
@@ -83,15 +86,20 @@ class Map extends Component {
               ],
             },
             (result, status) => {
-              if (status === google.maps.DirectionsStatus.OK) {
-                this.setState({
-                  directions: result,
-                });
+              if (
+                this._isMounted &&
+                status === google.maps.DirectionsStatus.OK
+              ) {
+                // eslint-disable-next-line react/prop-types
+                this.props.setDirections(result);
               } else {
                 //console.error(`error fetching directions ${result}`);
               }
             }
           );
+        },
+        componentWillUnmount() {
+          this._isMounted = false;
         },
       })
     )((props) => (
@@ -203,6 +211,8 @@ class Map extends Component {
         />
       </GoogleMap>
     ));
+
+    MapWithADirectionsRenderer.propTypes = { setDirections: PropTypes.func };
 
     return <MapWithADirectionsRenderer />;
   }

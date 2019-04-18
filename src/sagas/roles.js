@@ -12,7 +12,28 @@ import {
 
 function* fetchRoles() {
   yield delay(1000);
-  yield put(fetchRolesSuccess());
+  const response = [
+    {
+      isDeleted: false,
+      roleId: 1,
+      roleName: 'Admin',
+      status: 'Active',
+    },
+    {
+      isDeleted: false,
+      roleId: 2,
+      roleName: 'Super Admin',
+      status: 'Active',
+    },
+    {
+      isDeleted: false,
+      roleId: 3,
+      roleName: 'User',
+      status: 'Active',
+    },
+  ];
+
+  yield put(fetchRolesSuccess(response));
 }
 
 function* addRole({ payload }) {
