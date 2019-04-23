@@ -35,6 +35,11 @@ const Header = (props) => {
           <NavItem currentPath={pathname} title="Tabs" to="/tab" />
           <NavItem currentPath={pathname} title="Section" to="/section" />
           <NavItem currentPath={pathname} title="Tree Control" to="/tree" />
+          <NavItem
+            currentPath={pathname}
+            title="Administration"
+            to="/administration"
+          />
         </ul>
       </div>
     </nav>

@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 
-const Item = ({ title, children, isOpened, isActive }) => {
-  const [active, setActive] = useState(isActive);
+const Item = ({ id, title, children, isOpened, setActiveOrg, activeOrg }) => {
   const [opened, setOpened] = useState(isOpened);
+  const isActive = activeOrg === id;
 
   return (
     <li
       className={`list-group-item ${!children.length ? 'noTree' : ''} ${
         opened ? 'openTree' : 'closeTree'
-      } ${active ? 'active' : ''}`}
+      } ${isActive ? 'active' : ''}`}
     >
       <div className="treeNode">
         <div className="nodeHandler">
@@ -23,7 +23,7 @@ const Item = ({ title, children, isOpened, isActive }) => {
           <a
             href="#/"
             className="nodeContent-item"
-            onClick={() => setActive(!active)}
+            onClick={() => setActiveOrg(id)}
           >
             <span className="text">{title}</span>
           </a>
@@ -31,15 +31,26 @@ const Item = ({ title, children, isOpened, isActive }) => {
       </div>
       {!!children.length && (
         <div className="treeBody">
-          <MainTree items={children} />
+          <MainTree
+            items={children}
+            activeOrg={activeOrg}
+            setActiveOrg={setActiveOrg}
+          />
         </div>
       )}
     </li>
   );
 };
 
-const MainTree = ({ items }) => {
-  const listItems = items.map((item, index) => <Item key={index} {...item} />);
+const MainTree = ({ items, activeOrg, setActiveOrg }) => {
+  const listItems = items.map((item, index) => (
+    <Item
+      key={index}
+      {...item}
+      activeOrg={activeOrg}
+      setActiveOrg={setActiveOrg}
+    />
+  ));
 
   return <ul className="list-group">{listItems}</ul>;
 };
@@ -48,26 +59,36 @@ const TreeControl = (props) => {
   const items = [
     {
       children: [
-        { children: [], isActive: false, isOpened: false, title: 'Orbcomm' },
+        {
+          children: [],
+          id: 4,
+          isActive: false,
+          isOpened: false,
+          title: 'Orbcomm',
+        },
         {
           children: [
             {
               children: [],
+              id: 2,
               isActive: false,
               isOpened: true,
               title: 'Orbcomm-No-Child',
             },
           ],
+          id: 3,
           isActive: false,
           isOpened: false,
           title: 'Orbcomm',
         },
       ],
+      id: 1,
       isActive: true,
       isOpened: true,
       title: 'Orbcomm-Root',
     },
   ];
+  const [activeOrg, setActiveOrg] = useState(1);
 
   return (
     <div className="treeControl">
@@ -88,7 +109,11 @@ const TreeControl = (props) => {
       </div>
       <div className="treeBody-wrap" id="topLevel-OrganizationTreeControlID">
         <div className="treeBody">
-          <MainTree items={items} />
+          <MainTree
+            items={items}
+            activeOrg={activeOrg}
+            setActiveOrg={setActiveOrg}
+          />
         </div>
       </div>
     </div>

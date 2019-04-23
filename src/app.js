@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'react-proptypes';
 
 import Routes from './routes';
-import Header from './components/header';
 import { fetchRoles } from './actions/roles';
 import './app.css';
 
@@ -12,14 +11,7 @@ const App = (props) => {
     if (!props.roles.length) props.fetchRoles();
   }, []);
 
-  return (
-    <div className="container">
-      <Header />
-      <div className="workspace">
-        <Routes />
-      </div>
-    </div>
-  );
+  return <Routes />;
 };
 
 App.propTypes = {
