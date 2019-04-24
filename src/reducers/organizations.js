@@ -1,10 +1,17 @@
-import { FETCH_ORGANIZATIONS_REQUESTED, FETCH_ORGANIZATIONS_SUCCESS, FETCH_ORGANIZATIONS_FAILURE, VIEW_ORGANIZATION_SUCCESS } from '../actions/organizations';
+import {
+  FETCH_ORGANIZATIONS_REQUESTED,
+  FETCH_ORGANIZATIONS_SUCCESS,
+  FETCH_ORGANIZATIONS_FAILURE,
+  VIEW_ORGANIZATION_SUCCESS,
+  SELECT_ORGANIZATION_SUCCESS,
+} from '../actions/organizations';
 
 const initialState = {
   activeOrganization: null,
   errors: null,
   isLoading: false,
   organizations: [],
+  selectedOrganization: null,
 };
 
 const roles = (state = initialState, { type, payload }) => {
@@ -23,6 +30,7 @@ const roles = (state = initialState, { type, payload }) => {
         errors: null,
         isLoading: false,
         organizations: [...payload.organizations],
+        selectedOrganization: [...payload.organizations],
       };
 
     case VIEW_ORGANIZATION_SUCCESS:
@@ -37,7 +45,11 @@ const roles = (state = initialState, { type, payload }) => {
         errors: payload,
         isLoading: false,
       };
-
+    case SELECT_ORGANIZATION_SUCCESS:
+      return {
+        ...state,
+        selectedOrganization: [{ ...payload }],
+      };
     default:
       return state;
   }

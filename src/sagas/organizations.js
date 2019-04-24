@@ -6,6 +6,9 @@ import {
   fetchOrganizationsFailure,
   VIEW_ORGANIZATION,
   viewOrganizationSuccess,
+  SELECT_ORGANIZATION,
+  selectOrganizationSuccess,
+  SELECT_ORGANIZATION_SUCCESS,
 } from '../actions/organizations';
 
 const callApi = async () => {
@@ -31,7 +34,7 @@ function* fetchOrganizations() {
 
     yield put(
       fetchOrganizationsSuccess({
-        activeOrganization: { locationID: updatedItems[0].locationID, locationName: updatedItems[0].locationName },
+        activeOrganization: { ...updatedItems[0] },
         organizations: updatedItems,
       })
     );
@@ -40,10 +43,21 @@ function* fetchOrganizations() {
   }
 }
 
-function* viewOrganization({ payload }) {
+function* viewOrganizationHandler({ payload }) {
   yield put(viewOrganizationSuccess(payload));
 }
 
+function* selectOrganization({ payload }) {
+  const updatedItems = { ...payload, isOpened: true };
+
+  yield put(selectOrganizationSuccess(updatedItems));
+}
+
 export default function* rolesSaga() {
-  yield all([takeLatest(FETCH_ORGANIZATIONS, fetchOrganizations), takeLatest(VIEW_ORGANIZATION, viewOrganization)]);
+  yield all([
+    takeLatest(FETCH_ORGANIZATIONS, fetchOrganizations),
+    takeLatest(VIEW_ORGANIZATION, viewOrganizationHandler),
+    takeLatest(SELECT_ORGANIZATION, selectOrganization),
+    takeLatest(SELECT_ORGANIZATION_SUCCESS, viewOrganizationHandler),
+  ]);
 }

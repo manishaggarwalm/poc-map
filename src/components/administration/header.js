@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'react-proptypes';
 import TreeControl from '../ready-components/tree-control';
-import { viewOrganization } from '../../actions/organizations';
+import { selectOrganization } from '../../actions/organizations';
 
 const Header = (props) => {
-  const { activeOrganization, handleSideBar, history, organizations } = props;
+  const { selectedOrganization, handleSideBar, history, organizations } = props;
   const userLogout = () => {
     history.push('/');
   };
+  const selectedOrganizationDetails = selectedOrganization && selectedOrganization.length ? selectedOrganization[0] : null;
 
   const user = { name: 'John Doe' };
 
@@ -37,15 +38,15 @@ const Header = (props) => {
           <div className="tree-dropdown-btn">
             <button className="dropbtn dropdown-toggle" id="selected-TopOrg-id" data-toggle="dropdown">
               <span className="droptext ellipsis-150" id="selected-TopOrg-text-id">
-                {activeOrganization ? activeOrganization.locationName : ''}
+                {selectedOrganizationDetails ? selectedOrganizationDetails.locationName : ''}
               </span>
               <span className="arrow-icon">
                 <i className="fas fa-angle-down" />
               </span>
             </button>
             <div id="searchOrganization-control-id" className="tree-dropdown-wrap dropdown-menu disable-collapse">
-              {organizations.length && activeOrganization ? (
-                <TreeControl items={organizations} activeItem={activeOrganization.locationID} onClick={props.viewOrganization} />
+              {organizations.length && selectedOrganizationDetails ? (
+                <TreeControl items={organizations} activeItem={selectedOrganizationDetails.locationID} onClick={props.selectOrganization} />
               ) : (
                 ''
               )}
@@ -65,8 +66,8 @@ const Header = (props) => {
                 >
                   <span className="icon">
                     <i className="fas fa-user-circle" />
-                  </span>
-                  <span className="user-main-text text d-none d-sm-none d-lg-inline-flex">{user.name}</span>
+                  </span>{' '}
+                  <span className="user-main-text text d-none d-sm-none d-lg-inline-flex">{user.name}</span>{' '}
                   <span className="arrow-icon">
                     <i className="fas fa-angle-down" />
                   </span>
@@ -83,7 +84,7 @@ const Header = (props) => {
               <button type="button" className="btn btn-light logout-btn" onClick={userLogout}>
                 <span className="icon">
                   <i className="fas fa-sign-out-alt" />
-                </span>
+                </span>{' '}
                 <span className="text d-none d-sm-none d-lg-inline-flex">logout</span>
               </button>
             </div>
@@ -95,17 +96,17 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  activeOrganization: PropTypes.string,
   handleSideBar: PropTypes.func,
   history: PropTypes.object,
   organizations: PropTypes.array,
-  viewOrganization: PropTypes.func,
+  selectOrganization: PropTypes.func,
+  selectedOrganization: PropTypes.array,
 };
 
 export default connect(
-  ({ organizations: { activeOrganization, organizations } }) => ({
-    activeOrganization,
+  ({ organizations: { selectedOrganization, organizations } }) => ({
     organizations,
+    selectedOrganization,
   }),
-  { viewOrganization }
+  { selectOrganization }
 )(withRouter(Header));

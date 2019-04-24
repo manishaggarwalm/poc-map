@@ -28,7 +28,7 @@ const Item = ({ locationID, locationName, subLocation, isOpened, onClick, active
             className="nodeContent-item"
             onClick={(event) => {
               event.preventDefault();
-              onClick({ locationID, locationName });
+              onClick({ isOpened, locationID, locationName, subLocation });
             }}
           >
             <span className="text">{locationName}</span>
