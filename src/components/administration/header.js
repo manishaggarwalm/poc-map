@@ -44,7 +44,7 @@ const Header = (props) => {
                 <i className="fas fa-angle-down" />
               </span>
             </button>
-            <div id="searchOrganization-control-id" className="tree-dropdown-wrap dropdown-menu disable-collapse">
+            <div id="searchOrganization-control-id" className="tree-dropdown-wrap dropdown-menu disable-collapse" onClick={(event) => event.stopPropagation()}>
               {organizations.length && selectedOrganizationDetails ? (
                 <TreeControl items={organizations} activeItem={selectedOrganizationDetails.locationID} onClick={props.selectOrganization} />
               ) : (

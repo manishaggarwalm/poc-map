@@ -797,5 +797,19 @@
                 "status": "Active"
             }
         ]
+    },
+    {
+        "locationID": "ORG164444279",
+        "locationName": "ORBCOMM-Root2",
+        "type": "Contractor",
+        "status": "Active",
+        "subLocation": [
+            {
+                "locationID": "ORG23508844099",
+                "locationName": "Thoughtworks",
+                "type": "Enterprise",
+                "status": "Active"
+            }
+        ]
     }
 ]

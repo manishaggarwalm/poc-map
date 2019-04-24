@@ -172,7 +172,7 @@ const Organizations = (props) => {
                 </div>
               </div>
               <div className="column-2">
-                <TabSection sections={tabSections} />
+                {activeOrganization && Object.keys(activeOrganization).length ? <TabSection key={activeOrganization.locationID} sections={tabSections} /> : ''}
               </div>
             </div>
           </div>

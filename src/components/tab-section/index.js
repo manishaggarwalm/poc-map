@@ -28,7 +28,7 @@ const TabSection = (props) => {
     <div className="tab-control-wrap">
       <div className="actionBar-wrap light">
         <div className="actionBar">
-          <div className="left-section">
+          {/* <div className="left-section">
             <div className="actionBar-actions">
               <div className="btn-group">
                 <button type="button" className="btn btn-primary d-md-block d-lg-none" title="Show Organizations">
@@ -38,7 +38,7 @@ const TabSection = (props) => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="center-section">
             <div className="innerPage-tabs-wrap">
               <ul className="innerPage-tab-group d-inline-flex">

@@ -8,7 +8,7 @@ const Overview = (props) => (
   </div>
 );
 
-Overview.propTypes = { activeOrganization: PropTypes.array };
+Overview.propTypes = { activeOrganization: PropTypes.object };
 
 export default connect(({ organizations: { activeOrganization } }) => ({
   activeOrganization,
