@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
 import { connect } from 'react-redux';
-import TreeControl from '../ready-components/tree-control';
-import { viewOrganization } from '../../actions/organizations';
-import Modal from '../modal';
+import TreeControl from '../../ready-components/tree-control';
+import TabSection from '../../tab-section';
+import { viewOrganization } from '../../../actions/organizations';
+import Modal from '../../modal';
+
+import Overview from './overview';
+import Contacts from './contacts';
+import Logo from './logo';
+import PasswordPolicy from './password-policy';
+import Users from './users';
 
 const DeleteModal = ({ handleDeleteModal }) => {
   const [canDelete, handleDelete] = useState(false);
@@ -65,6 +72,40 @@ DeleteModal.propTypes = {
 const Organizations = (props) => {
   const { activeMenu, activeOrganization, selectedOrganization } = props;
   const [showDeleteModal, handleDeleteModal] = useState(false);
+
+  let tabSections = [
+    {
+      component: Overview,
+      icon: 'info-circle',
+      status: 'active',
+      title: 'Overview',
+      tooltip: 'Organization Overview',
+    },
+    {
+      component: Contacts,
+      icon: 'address-card',
+      status: 'inActive',
+      title: 'Contacts',
+    },
+    {
+      component: Users,
+      icon: 'users',
+      status: 'inActive',
+      title: 'Users',
+    },
+    {
+      component: PasswordPolicy,
+      icon: 'key',
+      status: 'inActive',
+      title: 'Password Policy',
+    },
+    {
+      component: Logo,
+      icon: 'smile',
+      status: 'inActive',
+      title: 'Logo',
+    },
+  ];
 
   return (
     <>
@@ -131,7 +172,7 @@ const Organizations = (props) => {
                 </div>
               </div>
               <div className="column-2">
-                <pre>{JSON.stringify(activeOrganization)}</pre>
+                <TabSection sections={tabSections} />
               </div>
             </div>
           </div>

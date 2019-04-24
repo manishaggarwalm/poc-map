@@ -9,9 +9,7 @@ const TabSection = (props) => {
   const [tabSections, updateSections] = useState(sections);
 
   const ActiveComponent = () => {
-    const { component: Component } = tabSections.find(
-      ({ status }) => status === 'active'
-    );
+    const { component: Component } = tabSections.find(({ status }) => status === 'active');
 
     return <Component />;
   };
@@ -33,11 +31,7 @@ const TabSection = (props) => {
           <div className="left-section">
             <div className="actionBar-actions">
               <div className="btn-group">
-                <button
-                  type="button"
-                  className="btn btn-primary d-md-block d-lg-none"
-                  title="Show Organizations"
-                >
+                <button type="button" className="btn btn-primary d-md-block d-lg-none" title="Show Organizations">
                   <span className="btn-icon">
                     <i className="fas fa-ellipsis-v" />
                   </span>
@@ -49,28 +43,16 @@ const TabSection = (props) => {
             <div className="innerPage-tabs-wrap">
               <ul className="innerPage-tab-group d-inline-flex">
                 <Suspense fallback={<div>Loading</div>}>
-                  {tabSections.map(
-                    ({ icon, status, title, tooltip }, index) => (
-                      <TabTitle
-                        key={index}
-                        icon={icon}
-                        status={status}
-                        tooltip={tooltip}
-                        title={title}
-                        onClick={() => resetActiveAndSetCurrentActive(index)}
-                      />
-                    )
-                  )}
+                  {tabSections.map(({ icon, status, title, tooltip }, index) => (
+                    <TabTitle key={index} icon={icon} status={status} tooltip={tooltip} title={title} onClick={() => resetActiveAndSetCurrentActive(index)} />
+                  ))}
                 </Suspense>
               </ul>
             </div>
           </div>
         </div>
       </div>
-      <div
-        className="innerPageTab-content-group"
-        id="organizations-innerPageTab-group-id"
-      >
+      <div className="innerPageTab-content-group" id="organizations-innerPageTab-group-id">
         <div className="innerPageTab-content" id="contacts-InnerTabPage-id">
           <div className="body-wrap">
             <ActiveComponent />

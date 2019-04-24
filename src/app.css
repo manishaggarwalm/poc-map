@@ -17,3 +17,11 @@ div#panel {
   height: 100%;
   overflow-y: scroll;
 }
+
+.__react_component_tooltip.type-dark.place-top:after {
+  border-top-width: 8px !important;
+}
+
+.__react_component_tooltip.type-dark.place-bottom:after {
+  border-bottom-width: 8px !important;
+}
