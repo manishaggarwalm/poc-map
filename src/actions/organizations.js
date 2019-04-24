@@ -11,3 +11,9 @@ export const fetchOrganizationsSuccess = createAction(FETCH_ORGANIZATIONS_SUCCES
 
 export const FETCH_ORGANIZATIONS_FAILURE = 'FETCH_ORGANIZATIONS_FAILURE';
 export const fetchOrganizationsFailure = createAction(FETCH_ORGANIZATIONS_FAILURE);
+
+export const VIEW_ORGANIZATION = 'VIEW_ORGANIZATION';
+export const viewOrganization = createAction(VIEW_ORGANIZATION);
+
+export const VIEW_ORGANIZATION_SUCCESS = 'VIEW_ORGANIZATION_SUCCESS';
+export const viewOrganizationSuccess = createAction(VIEW_ORGANIZATION_SUCCESS);

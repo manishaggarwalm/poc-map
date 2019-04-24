@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
+import { connect } from 'react-redux';
 import Modal from '../modal';
+import TreeControl from '../ready-components/tree-control';
+import { viewOrganization } from '../../actions/organizations';
 
 const MenuItem = ({ icon, isActive, title, count }) => (
   <li className={`page-tab ${isActive ? 'active' : ''}`}>
@@ -84,7 +87,8 @@ DeleteModal.propTypes = {
   handleDeleteModal: PropTypes.func,
 };
 
-const BodySection = () => {
+const BodySection = (props) => {
+  const { activeOrganization, organizations } = props;
   const [isMenuExpanded, expandMenu] = useState(false);
   const [showDeleteModal, handleDeleteModal] = useState(false);
 
@@ -194,31 +198,12 @@ const BodySection = () => {
                         </div>
                       </div>
                       <div className="body-wrap">
-                        <div className="filterBar-wrap d-none">
-                          <div className="filterBar">
-                            <div className="input-group input-group-sm">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">
-                                  <i className="fas fa-search" />
-                                </span>
-                              </div>
-                              <input type="text" className="form-control" placeholder="Search" />
-                            </div>
-                          </div>
-                        </div>
                         <div className="bodyContent-wrap">
-                          <div className="treeControl">
-                            <div className="treeControl-search-wrap">
-                              <div className="input-group input-group-sm">
-                                <div className="input-group-prepend">
-                                  <span className="input-group-text">
-                                    <i className="fas fa-search" />
-                                  </span>
-                                </div>
-                                <input type="text" className="form-control treeControl-search-textBox" placeholder="Search" />
-                              </div>
-                            </div>
-                          </div>
+                          {organizations.length && Object.keys(activeOrganization).length ? (
+                            <TreeControl items={organizations} activeItem={activeOrganization.locationID} onClick={props.viewOrganization} />
+                          ) : (
+                            ''
+                          )}
                         </div>
                       </div>
                     </div>
@@ -234,4 +219,16 @@ const BodySection = () => {
   );
 };
 
-export default BodySection;
+BodySection.propTypes = {
+  activeOrganization: PropTypes.string,
+  organizations: PropTypes.array,
+  viewOrganization: PropTypes.func,
+};
+
+export default connect(
+  ({ organizations: { activeOrganization, organizations } }) => ({
+    activeOrganization,
+    organizations,
+  }),
+  { viewOrganization }
+)(BodySection);

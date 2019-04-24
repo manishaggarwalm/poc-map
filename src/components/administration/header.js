@@ -1,9 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'react-proptypes';
+import TreeControl from '../ready-components/tree-control';
+import { viewOrganization } from '../../actions/organizations';
 
-const Header = ({ handleSideBar, history }) => {
+const Header = (props) => {
+  const { activeOrganization, handleSideBar, history, organizations } = props;
   const userLogout = () => {
     history.push('/');
   };
@@ -33,25 +37,18 @@ const Header = ({ handleSideBar, history }) => {
           <div className="tree-dropdown-btn">
             <button className="dropbtn dropdown-toggle" id="selected-TopOrg-id" data-toggle="dropdown">
               <span className="droptext ellipsis-150" id="selected-TopOrg-text-id">
-                ORBCOMM-Root
+                {activeOrganization ? activeOrganization.locationName : ''}
               </span>
               <span className="arrow-icon">
                 <i className="fas fa-angle-down" />
               </span>
             </button>
             <div id="searchOrganization-control-id" className="tree-dropdown-wrap dropdown-menu disable-collapse">
-              <div className="treeControl">
-                <div className="treeControl-search-wrap">
-                  <div className="input-group input-group-sm">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">
-                        <i className="fas fa-search" />
-                      </span>
-                    </div>
-                    <input type="text" className="form-control treeControl-search-textBox" id="searchOrganization-textbox-id" placeholder="Search" />
-                  </div>
-                </div>
-              </div>
+              {organizations.length && activeOrganization ? (
+                <TreeControl items={organizations} activeItem={activeOrganization.locationID} onClick={props.viewOrganization} />
+              ) : (
+                ''
+              )}
             </div>
           </div>
         </div>
@@ -98,8 +95,17 @@ const Header = ({ handleSideBar, history }) => {
 };
 
 Header.propTypes = {
+  activeOrganization: PropTypes.string,
   handleSideBar: PropTypes.func,
   history: PropTypes.object,
+  organizations: PropTypes.array,
+  viewOrganization: PropTypes.func,
 };
 
-export default withRouter(Header);
+export default connect(
+  ({ organizations: { activeOrganization, organizations } }) => ({
+    activeOrganization,
+    organizations,
+  }),
+  { viewOrganization }
+)(withRouter(Header));

@@ -1,19 +1,22 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 
-const Item = ({ id, title, children, isOpened, setActiveOrg, activeOrg }) => {
+const Item = ({ locationID, locationName, subLocation, isOpened, onClick, activeItem }) => {
   const [opened, setOpened] = useState(isOpened);
-  const isActive = activeOrg === id;
+  const isActive = activeItem === locationID;
+  const hasChildren = !!(subLocation && subLocation.length);
 
   return (
-    <li
-      className={`list-group-item ${!children.length ? 'noTree' : ''} ${
-        opened ? 'openTree' : 'closeTree'
-      } ${isActive ? 'active' : ''}`}
-    >
+    <li className={`list-group-item ${!hasChildren ? 'noTree' : ''} ${opened ? 'openTree' : 'closeTree'} ${isActive ? 'active' : ''}`}>
       <div className="treeNode">
         <div className="nodeHandler">
-          <a href="#/" onClick={() => setOpened(!opened)}>
+          <a
+            href="/"
+            onClick={(event) => {
+              event.preventDefault();
+              setOpened(!opened);
+            }}
+          >
             <i className="fas fa-angle-right" />
             <i className="fas fa-angle-down" />
             <i className="fas fa-circle" />
@@ -21,75 +24,33 @@ const Item = ({ id, title, children, isOpened, setActiveOrg, activeOrg }) => {
         </div>
         <div className="nodeContent">
           <a
-            href="#/"
+            href="/"
             className="nodeContent-item"
-            onClick={() => setActiveOrg(id)}
+            onClick={(event) => {
+              event.preventDefault();
+              onClick({ locationID, locationName });
+            }}
           >
-            <span className="text">{title}</span>
+            <span className="text">{locationName}</span>
           </a>
         </div>
       </div>
-      {!!children.length && (
+      {hasChildren && (
         <div className="treeBody">
-          <MainTree
-            items={children}
-            activeOrg={activeOrg}
-            setActiveOrg={setActiveOrg}
-          />
+          <MainTree items={subLocation} activeItem={activeItem} onClick={onClick} />
         </div>
       )}
     </li>
   );
 };
 
-const MainTree = ({ items, activeOrg, setActiveOrg }) => {
-  const listItems = items.map((item, index) => (
-    <Item
-      key={index}
-      {...item}
-      activeOrg={activeOrg}
-      setActiveOrg={setActiveOrg}
-    />
-  ));
+const MainTree = ({ items, activeItem, onClick }) => {
+  const listItems = items.map((item) => <Item key={item.locationID} {...item} activeItem={activeItem} onClick={onClick} />);
 
   return <ul className="list-group">{listItems}</ul>;
 };
 
-const TreeControl = (props) => {
-  const items = [
-    {
-      children: [
-        {
-          children: [],
-          id: 4,
-          isActive: false,
-          isOpened: false,
-          title: 'Orbcomm',
-        },
-        {
-          children: [
-            {
-              children: [],
-              id: 2,
-              isActive: false,
-              isOpened: true,
-              title: 'Orbcomm-No-Child',
-            },
-          ],
-          id: 3,
-          isActive: false,
-          isOpened: false,
-          title: 'Orbcomm',
-        },
-      ],
-      id: 1,
-      isActive: true,
-      isOpened: true,
-      title: 'Orbcomm-Root',
-    },
-  ];
-  const [activeOrg, setActiveOrg] = useState(1);
-
+const TreeControl = ({ items, activeItem, onClick }) => {
   return (
     <div className="treeControl">
       <div className="treeControl-search-wrap">
@@ -99,21 +60,12 @@ const TreeControl = (props) => {
               <i className="fas fa-search" />
             </span>
           </div>
-          <input
-            type="text"
-            className="form-control treeControl-search-textBox"
-            id="searchOrganization-textbox-id"
-            placeholder="Search"
-          />
+          <input type="text" className="form-control treeControl-search-textBox" id="searchOrganization-textbox-id" placeholder="Search" />
         </div>
       </div>
       <div className="treeBody-wrap" id="topLevel-OrganizationTreeControlID">
         <div className="treeBody">
-          <MainTree
-            items={items}
-            activeOrg={activeOrg}
-            setActiveOrg={setActiveOrg}
-          />
+          <MainTree items={items} activeItem={activeItem} onClick={onClick} />
         </div>
       </div>
     </div>

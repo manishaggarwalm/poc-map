@@ -9,7 +9,7 @@ import { fetchOrganizations } from '../../actions/organizations';
 
 const Administration = (props) => {
   useEffect(() => {
-    props.fetchOrganizations();
+    if (!props.organizations.length) props.fetchOrganizations();
   }, {});
 
   const [showSideBar, handleSideBar] = useState(false);
@@ -28,9 +28,12 @@ const Administration = (props) => {
 
 Administration.propTypes = {
   fetchOrganizations: PropTypes.func,
+  organizations: PropTypes.array,
 };
 
 export default connect(
-  null,
+  ({ organizations: { organizations } }) => ({
+    organizations,
+  }),
   { fetchOrganizations }
 )(Administration);
