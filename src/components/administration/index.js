@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'react-proptypes';
 import Footer from './footer';
@@ -15,14 +15,12 @@ const Administration = (props) => {
   const [showSideBar, handleSideBar] = useState(false);
 
   return (
-    <Fragment>
-      <div className="ol-BasePage">
-        {showSideBar && <SideBar handleSideBar={handleSideBar} />}
-        <Header handleSideBar={handleSideBar} />
-        <BodySection />
-        <Footer />
-      </div>
-    </Fragment>
+    <div className="ol-BasePage">
+      {showSideBar && <SideBar handleSideBar={handleSideBar} />}
+      <Header handleSideBar={handleSideBar} />
+      <BodySection />
+      <Footer />
+    </div>
   );
 };
 
