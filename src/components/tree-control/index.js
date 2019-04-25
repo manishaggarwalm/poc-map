@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import Tree from './tree';
 import Search from './search';
 
-const TreeControl = ({ isSearchable, items, activeItem, onClick }) => {
+const TreeControl = ({ isSearchable, items, activeItem, onClick, reset }) => {
   const [searchText, updateSearchText] = useState('');
   const [expandAll, toggleExpandList] = useState(false);
   const [list, updateList] = useState(items);
@@ -12,6 +12,13 @@ const TreeControl = ({ isSearchable, items, activeItem, onClick }) => {
   useEffect(() => {
     updateList(items);
   }, [items]);
+
+  useEffect(() => {
+    if (!reset) {
+      updateSearchText('');
+      updateList(items);
+    }
+  }, [reset]);
 
   const filterList = (list, value) =>
     list.filter((item) => {
@@ -67,11 +74,13 @@ TreeControl.propTypes = {
   isSearchable: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.shape(itemPropTypes)).isRequired,
   onClick: PropTypes.func,
+  reset: PropTypes.bool,
 };
 
 TreeControl.defaultProps = {
   isSearchable: true,
   onClick: () => {},
+  reset: true,
 };
 
 export default TreeControl;

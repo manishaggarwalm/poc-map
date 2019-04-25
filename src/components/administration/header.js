@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,8 @@ const Header = (props) => {
     document.body.click();
     props.selectOrganization(item);
   };
+
+  const [dropdownStatus, setDropdownStatus] = useState(false);
 
   const { selectedOrganization, handleSideBar, history, organizations } = props;
   const selectedOrganizationDetails = selectedOrganization && selectedOrganization.length ? selectedOrganization[0] : null;
@@ -39,7 +41,7 @@ const Header = (props) => {
           </div>
         </div>
         <div className="center-section d-flex align-items-center">
-          <Dropdown className="tree-dropdown-btn">
+          <Dropdown className="tree-dropdown-btn" onToggle={(value) => setDropdownStatus(value)}>
             <Dropdown.Toggle variant="default" className="dropbtn" id="dropdown-basic">
               <span className="droptext ellipsis-150">{selectedOrganizationDetails ? selectedOrganizationDetails.name : ''}</span>
               <span className="arrow-icon">
@@ -48,7 +50,7 @@ const Header = (props) => {
             </Dropdown.Toggle>
             <Dropdown.Menu className="tree-dropdown-wrap">
               {organizations.length && selectedOrganizationDetails ? (
-                <TreeControl items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={handleCompanyClick} />
+                <TreeControl reset={dropdownStatus} items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={handleCompanyClick} />
               ) : (
                 ''
               )}
