@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
 import { connect } from 'react-redux';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import TreeControl from '../../tree-control';
 import TabSection from '../../tab-section';
 import { viewOrganization } from '../../../actions/organizations';
-import Modal from '../../modal';
-
 import Overview from './overview';
 import Contacts from './contacts';
 import Logo from './logo';
 import PasswordPolicy from './password-policy';
 import Users from './users';
 
+const ModalTitleContainer = ({ children }) => <h5 className="modal-title">{children}</h5>;
+
+ModalTitleContainer.propTypes = {
+  children: PropTypes.node,
+};
+
 const DeleteModal = ({ handleDeleteModal }) => {
   const [canDelete, handleDelete] = useState(false);
 
   return (
-    <>
-      <div className="modal-header">
-        <h5 className="modal-title">Delete Organization</h5>
-      </div>
-      <div className="modal-body">
+    <Modal show onHide={() => handleDeleteModal(false)}>
+      <Modal.Header>
+        <Modal.Title as={ModalTitleContainer}>Delete Organization</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <div className="custom-alert-wrap warning" role="alert">
           <div className="icon">
             <i className="fas fa-exclamation-triangle" />
@@ -36,32 +42,32 @@ const DeleteModal = ({ handleDeleteModal }) => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="modal-footer">
+      </Modal.Body>
+      <Modal.Footer>
         <div className="actionBar">
           <div className="left-section">
             <div className="actionBar-actions">
-              <button type="button" className="btn btn-light" data-dismiss="modal" aria-label="Close" onClick={() => handleDeleteModal(false)}>
+              <Button variant="light" onClick={() => handleDeleteModal(false)}>
                 <span className="icon">
                   <i className="fas fa-times" />
                 </span>
                 <span className="text">No</span>
-              </button>
+              </Button>
             </div>
           </div>
           <div className="right-section">
             <div className="actionBar-actions">
-              <button type="button" className="btn btn-primary" disabled={!canDelete} onClick={() => handleDeleteModal(false)}>
+              <Button variant="primary" disabled={!canDelete} onClick={() => handleDeleteModal(false)}>
                 <span className="icon">
                   <i className="fas fa-check" />
                 </span>
                 <span className="text">Delete</span>
-              </button>
+              </Button>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
@@ -109,11 +115,7 @@ const Organizations = (props) => {
 
   return (
     <>
-      {showDeleteModal && (
-        <Modal onClick={() => handleDeleteModal(false)}>
-          <DeleteModal handleDeleteModal={handleDeleteModal} />
-        </Modal>
-      )}
+      {showDeleteModal && <DeleteModal showDeleteModal={showDeleteModal} handleDeleteModal={handleDeleteModal} />}
       <div className="page-group">
         <div className="page-group_page">
           <div className="page-wrap">
