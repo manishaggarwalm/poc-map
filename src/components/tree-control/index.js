@@ -14,7 +14,7 @@ const TreeControl = ({ isSearchable, items, activeItem, onClick, reset }) => {
   }, [items]);
 
   useEffect(() => {
-    if (!reset) {
+    if (reset) {
       updateSearchText('');
       updateList(items);
     }
@@ -80,7 +80,7 @@ TreeControl.propTypes = {
 TreeControl.defaultProps = {
   isSearchable: true,
   onClick: () => {},
-  reset: true,
+  reset: false,
 };
 
 export default TreeControl;

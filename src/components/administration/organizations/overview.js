@@ -3,7 +3,7 @@ import PropTypes from 'react-proptypes';
 import { connect } from 'react-redux';
 
 const Overview = (props) => (
-  <div style={{ overflow: 'scroll' }}>
+  <div style={{ overflowY: 'scroll' }}>
     <pre>{JSON.stringify(props.activeOrganization, undefined, 2)}</pre>
   </div>
 );

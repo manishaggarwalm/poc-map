@@ -28,7 +28,7 @@ const CenterSection = (props) => {
         </DropdownToggle>
         <DropdownMenu className="tree-dropdown-wrap">
           {organizations.length && selectedOrganizationDetails ? (
-            <TreeControl reset={dropdownStatus} items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={handleCompanyClick} />
+            <TreeControl reset={!dropdownStatus} items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={handleCompanyClick} />
           ) : (
             ''
           )}
