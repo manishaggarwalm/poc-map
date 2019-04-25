@@ -30,7 +30,7 @@ function* fetchOrganizations() {
   if (response && response.length) {
     let updatedItems = [...response];
 
-    updatedItems[0].isOpened = true;
+    updatedItems[0].toggled = true;
 
     yield put(
       fetchOrganizationsSuccess({
@@ -48,7 +48,7 @@ function* viewOrganizationHandler({ payload }) {
 }
 
 function* selectOrganization({ payload }) {
-  const updatedItems = { ...payload, isOpened: true };
+  const updatedItems = { ...payload, toggled: true };
 
   yield put(selectOrganizationSuccess(updatedItems));
 }

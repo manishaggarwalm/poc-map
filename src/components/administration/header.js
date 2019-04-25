@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -8,11 +8,9 @@ import TreeControl from '../tree-control';
 import { selectOrganization } from '../../actions/organizations';
 
 const Header = (props) => {
-  let dropDownContainer = createRef();
-
   const userLogout = () => history.push('/');
   const handleCompanyClick = (item) => {
-    dropDownContainer.current.click();
+    document.body.click();
     props.selectOrganization(item);
   };
 
@@ -41,7 +39,7 @@ const Header = (props) => {
           </div>
         </div>
         <div className="center-section d-flex align-items-center">
-          <Dropdown className="tree-dropdown-btn" ref={dropDownContainer}>
+          <Dropdown className="tree-dropdown-btn">
             <Dropdown.Toggle variant="default" className="dropbtn" id="dropdown-basic">
               <span className="droptext ellipsis-150">{selectedOrganizationDetails ? selectedOrganizationDetails.name : ''}</span>
               <span className="arrow-icon">
@@ -60,7 +58,7 @@ const Header = (props) => {
         <div className="right-section ">
           <div className="h-100 loggedIn-user-info">
             <div className="btn-group h-100">
-              <Dropdown className="btn-group">
+              <Dropdown className="btn-group" alignRight>
                 <Dropdown.Toggle variant="default" className="user-name-btn">
                   <span className="icon">
                     <i className="fas fa-user-circle" />
