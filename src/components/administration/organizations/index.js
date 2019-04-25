@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
 import { connect } from 'react-redux';
-import TreeControl from '../../ready-components/tree-control';
+import TreeControl from '../../tree-control';
 import TabSection from '../../tab-section';
 import { viewOrganization } from '../../../actions/organizations';
 import Modal from '../../modal';
@@ -164,7 +164,7 @@ const Organizations = (props) => {
                 <div className="body-wrap">
                   <div className="bodyContent-wrap">
                     {selectedOrganization && selectedOrganization.length && Object.keys(activeOrganization).length ? (
-                      <TreeControl items={selectedOrganization} activeItem={activeOrganization.locationID} onClick={props.viewOrganization} />
+                      <TreeControl items={selectedOrganization} activeItem={activeOrganization.cKey} onClick={props.viewOrganization} />
                     ) : (
                       ''
                     )}

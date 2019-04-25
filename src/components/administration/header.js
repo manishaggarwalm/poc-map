@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'react-proptypes';
-import TreeControl from '../ready-components/tree-control';
+import TreeControl from '../tree-control';
 import { selectOrganization } from '../../actions/organizations';
 
 const Header = (props) => {
@@ -36,17 +36,17 @@ const Header = (props) => {
         </div>
         <div className="center-section d-flex align-items-center">
           <div className="tree-dropdown-btn">
-            <button className="dropbtn dropdown-toggle" id="selected-TopOrg-id" data-toggle="dropdown">
+            <button className="dropbtn dropdown-toggle" data-toggle="dropdown">
               <span className="droptext ellipsis-150" id="selected-TopOrg-text-id">
-                {selectedOrganizationDetails ? selectedOrganizationDetails.locationName : ''}
+                {selectedOrganizationDetails ? selectedOrganizationDetails.name : ''}
               </span>
               <span className="arrow-icon">
                 <i className="fas fa-angle-down" />
               </span>
             </button>
-            <div id="searchOrganization-control-id" className="tree-dropdown-wrap dropdown-menu disable-collapse" onClick={(event) => event.stopPropagation()}>
+            <div className="tree-dropdown-wrap dropdown-menu disable-collapse" role="menu">
               {organizations.length && selectedOrganizationDetails ? (
-                <TreeControl items={organizations} activeItem={selectedOrganizationDetails.locationID} onClick={props.selectOrganization} />
+                <TreeControl items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={props.selectOrganization} />
               ) : (
                 ''
               )}

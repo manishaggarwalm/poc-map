@@ -12,7 +12,7 @@ const AddRole = lazy(() => import('../roles/add-role'));
 const EditRole = lazy(() => import('../roles/edit-role'));
 const DeleteRole = lazy(() => import('../roles/delete-role'));
 const Section = lazy(() => import('../ready-components/section'));
-const TreeControl = lazy(() => import('../ready-components/tree-control'));
+const TreeControl = lazy(() => import('../tree-control'));
 const Map = lazy(() => import('../map'));
 const Tabs = lazy(() => import('../ready-components/tabs'));
 
