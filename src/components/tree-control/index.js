@@ -57,7 +57,7 @@ const TreeControl = ({ isSearchable, items, activeItem, onClick }) => {
     </div>
   );
 };
-const itemPropTypes = { name: PropTypes.string.isRequired };
+const itemPropTypes = { ckey: PropTypes.string.isRequired, name: PropTypes.string.isRequired };
 
 itemPropTypes.children = PropTypes.arrayOf(PropTypes.shape(itemPropTypes));
 
