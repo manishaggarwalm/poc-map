@@ -42,7 +42,7 @@ const Header = (props) => {
         </div>
         <div className="center-section d-flex align-items-center">
           <Dropdown className="tree-dropdown-btn" ref={dropDownContainer}>
-            <Dropdown.Toggle className="dropbtn" id="dropdown-basic">
+            <Dropdown.Toggle variant="default" className="dropbtn" id="dropdown-basic">
               <span className="droptext ellipsis-150">{selectedOrganizationDetails ? selectedOrganizationDetails.name : ''}</span>
               <span className="arrow-icon">
                 <i className="fas fa-angle-down" />
@@ -60,14 +60,8 @@ const Header = (props) => {
         <div className="right-section ">
           <div className="h-100 loggedIn-user-info">
             <div className="btn-group h-100">
-              <div className="btn-group">
-                <button
-                  type="button"
-                  className="btn btn-default dropdown-toggle user-name-btn"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
+              <Dropdown className="btn-group">
+                <Dropdown.Toggle variant="default" className="user-name-btn">
                   <span className="icon">
                     <i className="fas fa-user-circle" />
                   </span>{' '}
@@ -75,16 +69,16 @@ const Header = (props) => {
                   <span className="arrow-icon">
                     <i className="fas fa-angle-down" />
                   </span>
-                </button>
-                <div className="dropdown-menu dropdown-menu-right">
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="tree-dropdown-wrap">
                   <Link className="dropdown-item" to="/help">
                     Help
                   </Link>
                   <Link className="dropdown-item" to="/settings">
                     My Settings
                   </Link>
-                </div>
-              </div>
+                </Dropdown.Menu>
+              </Dropdown>
               <button type="button" className="btn btn-light logout-btn" onClick={userLogout}>
                 <span className="icon">
                   <i className="fas fa-sign-out-alt" />
