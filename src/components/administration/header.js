@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'react-proptypes';
+import Dropdown from 'react-bootstrap/Dropdown';
 import TreeControl from '../tree-control';
 import { selectOrganization } from '../../actions/organizations';
 
 const Header = (props) => {
-  const { selectedOrganization, handleSideBar, history, organizations } = props;
-  const userLogout = () => {
-    history.push('/');
+  let dropDownContainer = createRef();
+
+  const userLogout = () => history.push('/');
+  const handleCompanyClick = (item) => {
+    dropDownContainer.current.click();
+    props.selectOrganization(item);
   };
+
+  const { selectedOrganization, handleSideBar, history, organizations } = props;
   const selectedOrganizationDetails = selectedOrganization && selectedOrganization.length ? selectedOrganization[0] : null;
 
   const user = { name: 'John Doe' };
@@ -35,23 +41,21 @@ const Header = (props) => {
           </div>
         </div>
         <div className="center-section d-flex align-items-center">
-          <div className="tree-dropdown-btn">
-            <button className="dropbtn dropdown-toggle" data-toggle="dropdown">
-              <span className="droptext ellipsis-150" id="selected-TopOrg-text-id">
-                {selectedOrganizationDetails ? selectedOrganizationDetails.name : ''}
-              </span>
+          <Dropdown className="tree-dropdown-btn" ref={dropDownContainer}>
+            <Dropdown.Toggle className="dropbtn" id="dropdown-basic">
+              <span className="droptext ellipsis-150">{selectedOrganizationDetails ? selectedOrganizationDetails.name : ''}</span>
               <span className="arrow-icon">
                 <i className="fas fa-angle-down" />
               </span>
-            </button>
-            <div className="tree-dropdown-wrap dropdown-menu disable-collapse" role="menu">
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="tree-dropdown-wrap">
               {organizations.length && selectedOrganizationDetails ? (
-                <TreeControl items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={props.selectOrganization} />
+                <TreeControl items={organizations} activeItem={selectedOrganizationDetails.cKey} onClick={handleCompanyClick} />
               ) : (
                 ''
               )}
-            </div>
-          </div>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
         <div className="right-section ">
           <div className="h-100 loggedIn-user-info">
