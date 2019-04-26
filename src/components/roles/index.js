@@ -58,7 +58,7 @@ const Roles = (props) => {
                   </span>
                   <span className="btn-text d-none d-sm-none d-lg-inline-flex">Delete</span>
                 </button>
-              </div>
+              </div>{' '}
               <div className="btn-group" role="group">
                 <button type="button" className="btn btn-primary" onClick={() => props.history.push('/add')}>
                   <span className="btn-icon">
