@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
 import { connect } from 'react-redux';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import TreeControl from '../../tree-control';
 import TabSection from '../../tab-section';
 import { viewOrganization } from '../../../actions/organizations';
@@ -11,69 +9,7 @@ import Contacts from './contacts';
 import Logo from './logo';
 import PasswordPolicy from './password-policy';
 import Users from './users';
-
-const ModalTitleContainer = ({ children }) => <h5 className="modal-title">{children}</h5>;
-
-ModalTitleContainer.propTypes = {
-  children: PropTypes.node,
-};
-
-const DeleteModal = ({ handleDeleteModal }) => {
-  const [canDelete, handleDelete] = useState(false);
-
-  return (
-    <Modal show onHide={() => handleDeleteModal(false)}>
-      <Modal.Header>
-        <Modal.Title as={ModalTitleContainer}>Delete Organization</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="custom-alert-wrap warning" role="alert">
-          <div className="icon">
-            <i className="fas fa-exclamation-triangle" />
-          </div>
-          <div className="message-text-wrap">
-            <span className="text">Are you sure that you want to delete Organization?</span>
-            <div style={{ padding: '20px 0 0 0' }}>
-              <label className="custom-checkbox">
-                <input type="checkbox" value={canDelete} onChange={(e) => handleDelete(e.target.checked)} />
-                <span className="custom-checkbox-text">Yes, I want to delete.</span>
-                <span className="checkmark" />
-              </label>
-            </div>
-          </div>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <div className="actionBar">
-          <div className="left-section">
-            <div className="actionBar-actions">
-              <Button variant="light" onClick={() => handleDeleteModal(false)}>
-                <span className="icon">
-                  <i className="fas fa-times" />
-                </span>
-                <span className="text">No</span>
-              </Button>
-            </div>
-          </div>
-          <div className="right-section">
-            <div className="actionBar-actions">
-              <Button variant="primary" disabled={!canDelete} onClick={() => handleDeleteModal(false)}>
-                <span className="icon">
-                  <i className="fas fa-check" />
-                </span>
-                <span className="text">Delete</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Modal.Footer>
-    </Modal>
-  );
-};
-
-DeleteModal.propTypes = {
-  handleDeleteModal: PropTypes.func,
-};
+import ConfirmModal from '../../confirm-modal';
 
 const Organizations = (props) => {
   const { activeMenu, activeOrganization, selectedOrganization } = props;
@@ -115,7 +51,16 @@ const Organizations = (props) => {
 
   return (
     <>
-      {showDeleteModal && <DeleteModal showDeleteModal={showDeleteModal} handleDeleteModal={handleDeleteModal} />}
+      {showDeleteModal && (
+        <ConfirmModal
+          doubleConfirm
+          doubleConfirmText="Yes, I want to delete."
+          confirmButtontext="Delete"
+          title="Delete Organization"
+          message="Are you sure that you want to delete Organization?"
+          onConfirm={() => handleDeleteModal(false)}
+        />
+      )}
       <div className="page-group">
         <div className="page-group_page">
           <div className="page-wrap">
