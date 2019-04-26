@@ -55,7 +55,7 @@ const Organizations = (props) => {
         <ConfirmModal
           doubleConfirm
           doubleConfirmText="Yes, I want to delete."
-          confirmButtontext="Delete"
+          confirmButtonText="Delete"
           title="Delete Organization"
           message="Are you sure that you want to delete Organization?"
           onConfirm={() => handleDeleteModal(false)}

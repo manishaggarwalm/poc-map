@@ -11,7 +11,7 @@ ModalTitleContainer.propTypes = {
 
 const Icon = () => <i className="fas fa-exclamation-triangle" />;
 
-const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doubleConfirmText, icon: IconComponent, onConfirm, message, title }) => {
+const ConfirmModal = ({ cancelButtonText, confirmButtonText, doubleConfirm, doubleConfirmText, icon: IconComponent, onConfirm, message, title }) => {
   const handleCheckBoxChange = ({ target: { checked } }) => handleDelete(checked);
 
   const accepted = () => onConfirm(true);
@@ -51,7 +51,7 @@ const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doub
                 <span className="icon">
                   <i className="fas fa-times" />
                 </span>
-                <span className="text">{cancelButtontext}</span>
+                <span className="text">{cancelButtonText}</span>
               </Button>
             </div>
           </div>
@@ -61,7 +61,7 @@ const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doub
                 <span className="icon">
                   <i className="fas fa-check" />
                 </span>
-                <span className="text">{confirmButtontext}</span>
+                <span className="text">{confirmButtonText}</span>
               </Button>
             </div>
           </div>
@@ -72,8 +72,8 @@ const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doub
 };
 
 ConfirmModal.propTypes = {
-  cancelButtontext: PropTypes.string,
-  confirmButtontext: PropTypes.string,
+  cancelButtonText: PropTypes.string,
+  confirmButtonText: PropTypes.string,
   doubleConfirm: PropTypes.bool,
   doubleConfirmText: PropTypes.string,
   icon: PropTypes.func,
@@ -83,8 +83,8 @@ ConfirmModal.propTypes = {
 };
 
 ConfirmModal.defaultProps = {
-  cancelButtontext: 'No',
-  confirmButtontext: 'Yes',
+  cancelButtonText: 'No',
+  confirmButtonText: 'Yes',
   doubleConfirm: false,
   doubleConfirmText: 'Yes, I confirm',
   icon: Icon,
