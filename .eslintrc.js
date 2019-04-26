@@ -9,6 +9,16 @@ module.exports = {
     'max-len': ['error', { code: 160 }],
     'newline-after-var': ['error', 'always'],
     'newline-before-return': 'error',
+    'object-curly-newline': [
+      'error',
+      {
+        ObjectExpression: 'always',
+        ObjectPattern: { multiline: true, minProperties: 2 },
+        ImportDeclaration: 'never',
+        ExportDeclaration: { multiline: true, minProperties: 3 },
+      },
+    ],
+    'object-property-newline': 'error',
     'padding-line-between-statements': 'error',
     'sort-keys': 'error',
     quotes: ['error', 'single'],

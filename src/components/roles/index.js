@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -28,8 +29,15 @@ const Roles = (props) => {
     },
   ];
 
-  const roles = props.componentRoles.filter(
-    ({ isDeleted }) => isDeleted === false
+  const roles = props.componentRoles.filter(({ isDeleted }) => isDeleted === false);
+  const [search, handleSearch] = useState('');
+
+  const filteredRoles = roles.filter(
+    ({ roleName }) =>
+      roleName
+        .toLowerCase()
+        .trim()
+        .indexOf(search.toLowerCase().trim()) > -1
   );
 
   return (
@@ -44,35 +52,19 @@ const Roles = (props) => {
           <div className="right-section">
             <div className="actionBar-actions">
               <div className="btn-group" role="group">
-                <button
-                  type="button"
-                  className="btn btn-light"
-                  title=""
-                  data-toggle="tooltip"
-                  data-original-title="Delete selected Contacts"
-                >
+                <button type="button" className="btn btn-light" onClick={() => props.history.push('/delete')}>
                   <span className="btn-icon">
                     <i className="fas fa-trash" />
                   </span>
-                  <span className="btn-text d-none d-sm-none d-lg-inline-flex">
-                    Delete
-                  </span>
+                  <span className="btn-text d-none d-sm-none d-lg-inline-flex">Delete</span>
                 </button>
               </div>
               <div className="btn-group" role="group">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  title=""
-                  data-toggle="tooltip"
-                  data-original-title="Create new Contact"
-                >
+                <button type="button" className="btn btn-primary" onClick={() => props.history.push('/add')}>
                   <span className="btn-icon">
                     <i className="fas fa-plus" />
                   </span>
-                  <span className="btn-text d-none d-sm-none d-lg-inline-flex">
-                    New
-                  </span>
+                  <span className="btn-text d-none d-sm-none d-lg-inline-flex">New</span>
                 </button>
               </div>
             </div>
@@ -93,9 +85,11 @@ const Roles = (props) => {
                   type="text"
                   className="form-control js-search-table"
                   placeholder="Search"
+                  value={search}
+                  onChange={({ target: { value } }) => handleSearch(value)}
                 />
                 <div className="input-group-append">
-                  <button className="btn btn-light" type="button">
+                  <button className="btn btn-light" type="button" onClick={() => handleSearch('')}>
                     <i className="fas fa-times" />
                   </button>
                 </div>
@@ -108,14 +102,7 @@ const Roles = (props) => {
                     <i className="fas fa-chevron-left" />
                   </button>
                 </div>
-                <input
-                  type="text"
-                  className="form-control text-center"
-                  id="contacts-pagination-id"
-                  value="1-20/100"
-                  disabled=""
-                  onChange={() => {}}
-                />
+                <input type="text" className="form-control text-center" id="contacts-pagination-id" value="1-20/100" disabled="" onChange={() => {}} />
                 <div className="input-group-append">
                   <button className="btn btn-light" type="button">
                     <i className="fas fa-angle-right" />
@@ -147,11 +134,7 @@ const Roles = (props) => {
             height: '300px',
           }}
         >
-          <AgGridReact
-            rowSelection="multiple"
-            columnDefs={columnDefs}
-            rowData={roles}
-          />
+          <AgGridReact rowSelection="multiple" columnDefs={columnDefs} rowData={filteredRoles} />
         </div>
       </div>
     </div>
@@ -167,6 +150,9 @@ Roles.propTypes = {
       status: PropTypes.string.isRequired,
     })
   ).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 const mapStateToProps = ({ users: { roles } }) => ({
@@ -176,4 +162,4 @@ const mapStateToProps = ({ users: { roles } }) => ({
 export default connect(
   mapStateToProps,
   null
-)(Roles);
+)(withRouter(Roles));

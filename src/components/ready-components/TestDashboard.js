@@ -12,7 +12,6 @@ const AddRole = lazy(() => import('../roles/add-role'));
 const EditRole = lazy(() => import('../roles/edit-role'));
 const DeleteRole = lazy(() => import('../roles/delete-role'));
 const Section = lazy(() => import('../ready-components/section'));
-const TreeControl = lazy(() => import('../tree-control'));
 const Map = lazy(() => import('../map'));
 const Tabs = lazy(() => import('../ready-components/tabs'));
 
@@ -34,7 +33,8 @@ const TestDashboard = (props) => {
             <Route exact path="/map" component={Map} />
             <Route exact path="/tab" component={Tabs} />
             <Route exact path="/section" component={Section} />
-            <Route exact path="/tree" component={TreeControl} />
+            <Route exact path="/help" render={() => <div>Help</div>} />
+            <Route exact path="/settings" render={() => <div>Settings</div>} />
           </Switch>
         </Suspense>
       </div>
@@ -48,6 +48,10 @@ TestDashboard.propTypes = {
 };
 
 export default connect(
-  ({ users: { roles } }) => ({ roles: roles.roles }),
-  { fetchRoles }
+  ({ users: { roles } }) => ({
+    roles: roles.roles,
+  }),
+  {
+    fetchRoles,
+  }
 )(TestDashboard);

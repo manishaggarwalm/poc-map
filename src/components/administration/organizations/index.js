@@ -12,7 +12,9 @@ import Users from './users';
 import ConfirmModal from '../../confirm-modal';
 
 const Organizations = (props) => {
-  const { activeMenu, activeOrganization, selectedOrganization } = props;
+  const {
+    activeMenu, activeOrganization, selectedOrganization, 
+  } = props;
   const [showDeleteModal, handleDeleteModal] = useState(false);
 
   let tabSections = [
@@ -137,9 +139,15 @@ Organizations.propTypes = {
 };
 
 export default connect(
-  ({ organizations: { activeOrganization, selectedOrganization } }) => ({
+  ({
+    organizations: {
+      activeOrganization, selectedOrganization, 
+    }, 
+  }) => ({
     activeOrganization,
     selectedOrganization,
   }),
-  { viewOrganization }
+  {
+    viewOrganization,
+  }
 )(Organizations);

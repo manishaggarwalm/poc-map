@@ -10,9 +10,13 @@ import CenterSection from './center-section';
 const Header = (props) => {
   const userLogout = () => history.push('/');
 
-  const { handleSideBar, history } = props;
+  const {
+    handleSideBar, history, 
+  } = props;
 
-  const user = { name: 'John Doe' };
+  const user = {
+    name: 'John Doe',
+  };
 
   return (
     <div className="ol-BasePage-HeaderSection">
@@ -72,7 +76,9 @@ const Header = (props) => {
 
 Header.propTypes = {
   handleSideBar: PropTypes.func,
-  history: PropTypes.shape({ push: PropTypes.func }),
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 export default withRouter(Header);

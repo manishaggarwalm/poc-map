@@ -11,7 +11,9 @@ ModalTitleContainer.propTypes = {
 
 const Icon = () => <i className="fas fa-exclamation-triangle" />;
 
-const ConfirmModal = ({ cancelButtonText, confirmButtonText, doubleConfirm, doubleConfirmText, icon: IconComponent, onConfirm, message, title }) => {
+const ConfirmModal = ({
+  cancelButtonText, confirmButtonText, doubleConfirm, doubleConfirmText, icon: IconComponent, onConfirm, message, title, 
+}) => {
   const handleCheckBoxChange = ({ target: { checked } }) => handleDelete(checked);
 
   const accepted = () => onConfirm(true);
@@ -32,7 +34,11 @@ const ConfirmModal = ({ cancelButtonText, confirmButtonText, doubleConfirm, doub
           <div className="message-text-wrap">
             <span className="text">{message}</span>
             {doubleConfirm && (
-              <div style={{ padding: '20px 0 0 0' }}>
+              <div
+                style={{
+                  padding: '20px 0 0 0',
+                }}
+              >
                 <label className="custom-checkbox">
                   <input type="checkbox" value={canDelete} onChange={handleCheckBoxChange} />
                   <span className="custom-checkbox-text">{doubleConfirmText}</span>

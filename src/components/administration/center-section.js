@@ -12,7 +12,9 @@ const CenterSection = (props) => {
     document.body.click();
     props.selectOrganization(item);
   };
-  const { selectedOrganization, organizations } = props;
+  const {
+    selectedOrganization, organizations, 
+  } = props;
   const selectedOrganizationDetails = selectedOrganization && selectedOrganization.length ? selectedOrganization[0] : null;
 
   const [dropdownStatus, setDropdownStatus] = useState(false);
@@ -45,9 +47,15 @@ CenterSection.propTypes = {
 };
 
 export default connect(
-  ({ organizations: { selectedOrganization, organizations } }) => ({
+  ({
+    organizations: {
+      selectedOrganization, organizations, 
+    }, 
+  }) => ({
     organizations,
     selectedOrganization,
   }),
-  { selectOrganization }
+  {
+    selectOrganization,
+  }
 )(CenterSection);
