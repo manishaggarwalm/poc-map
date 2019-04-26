@@ -14,10 +14,13 @@ const Icon = () => <i className="fas fa-exclamation-triangle" />;
 const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doubleConfirmText, icon: IconComponent, onConfirm, message, title }) => {
   const handleCheckBoxChange = ({ target: { checked } }) => handleDelete(checked);
 
+  const accepted = () => onConfirm(true);
+  const declined = () => onConfirm(false);
+
   const [canDelete, handleDelete] = useState(!doubleConfirm);
 
   return (
-    <Modal show onHide={() => onConfirm(false)}>
+    <Modal show onHide={declined}>
       <Modal.Header>
         <Modal.Title as={ModalTitleContainer}>{title}</Modal.Title>
       </Modal.Header>
@@ -44,7 +47,7 @@ const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doub
         <div className="actionBar">
           <div className="left-section">
             <div className="actionBar-actions">
-              <Button variant="light" onClick={() => onConfirm(false)}>
+              <Button variant="light" onClick={declined}>
                 <span className="icon">
                   <i className="fas fa-times" />
                 </span>
@@ -54,7 +57,7 @@ const ConfirmModal = ({ cancelButtontext, confirmButtontext, doubleConfirm, doub
           </div>
           <div className="right-section">
             <div className="actionBar-actions">
-              <Button variant="primary" disabled={!canDelete} onClick={() => onConfirm(true)}>
+              <Button variant="primary" disabled={!canDelete} onClick={accepted}>
                 <span className="icon">
                   <i className="fas fa-check" />
                 </span>
