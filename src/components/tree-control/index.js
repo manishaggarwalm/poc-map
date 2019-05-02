@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'react-proptypes';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, uniqBy } from 'lodash';
 import Tree from './tree';
 import Search from './search';
 
-const TreeControl = ({ isSearchable, items, activeItem, onClick, reset }) => {
+const TreeControl = ({
+  isMulti, isSearchable, items, activeItem, onClick, reset, 
+}) => {
   const [searchText, updateSearchText] = useState('');
   const [expandAll, toggleExpandList] = useState(false);
   const [list, updateList] = useState(items);
+  const [activeItems, setActiveItems] = useState(activeItem);
 
   useEffect(() => {
     updateList(items);
@@ -55,22 +58,41 @@ const TreeControl = ({ isSearchable, items, activeItem, onClick, reset }) => {
     }
   };
 
+  const onItemClick = (item, checked) => {
+    if (isMulti) {
+      let updatedActiveItems = uniqBy([...activeItems, ...item], 'cKey');
+
+      if (!checked) {
+        updatedActiveItems = updatedActiveItems.filter((activeItem) => !item.some(({ cKey }) => cKey === activeItem.cKey));
+      }
+
+      setActiveItems(updatedActiveItems);
+      onClick(updatedActiveItems);
+    } else {
+      onClick(item);
+    }
+  };
+
   return (
     <div className="treeControl">
       {isSearchable && <Search value={searchText} onChange={handleOnChange} />}
       <div className="treeBody-wrap">
-        <Tree items={list} activeItem={activeItem} onClick={onClick} expandAll={expandAll} />
+        <Tree items={list} activeItem={activeItem} isMulti={isMulti} onClick={onItemClick} expandAll={expandAll} />
       </div>
     </div>
   );
 };
 
-const itemPropTypes = { cKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, name: PropTypes.string.isRequired };
+const itemPropTypes = {
+  cKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 itemPropTypes.children = PropTypes.arrayOf(PropTypes.shape(itemPropTypes));
 
 TreeControl.propTypes = {
-  activeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  activeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.arrayOf(PropTypes.shape(itemPropTypes)).isRequired]),
+  isMulti: PropTypes.bool,
   isSearchable: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.shape(itemPropTypes)).isRequired,
   onClick: PropTypes.func,
@@ -78,6 +100,7 @@ TreeControl.propTypes = {
 };
 
 TreeControl.defaultProps = {
+  isMulti: false,
   isSearchable: true,
   onClick: () => {},
   reset: false,

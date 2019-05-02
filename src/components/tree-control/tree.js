@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'react-proptypes';
 import Item from './item';
 
-const Tree = ({ expandAll, items, activeItem, onClick }) => {
-  const listItems = items.map((item) => <Item key={item.cKey} {...item} expandAll={expandAll} activeItem={activeItem} onClick={onClick} />);
+const Tree = ({
+  expandAll, isMulti, items, activeItem, onClick, 
+}) => {
+  const listItems = items.map((item) => <Item isMulti={isMulti} key={item.cKey} item={item} expandAll={expandAll} activeItem={activeItem} onClick={onClick} />);
 
   return (
     <div className="treeBody">
@@ -21,8 +23,9 @@ const itemPropTypes = {
 itemPropTypes.children = PropTypes.arrayOf(PropTypes.shape(itemPropTypes));
 
 Tree.propTypes = {
-  activeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  activeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
   expandAll: PropTypes.bool,
+  isMulti: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.shape(itemPropTypes)),
   onClick: PropTypes.func,
 };

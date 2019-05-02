@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'react-proptypes';
 
-const Search = ({ value, onChange }) => {
+const Search = ({
+  value, onChange, 
+}) => {
   const handleChange = ({ target: { value } }) => {
     onChange(value);
   };
@@ -20,6 +22,9 @@ const Search = ({ value, onChange }) => {
   );
 };
 
-Search.propTypes = { onChange: PropTypes.func, value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) };
+Search.propTypes = {
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
 export default Search;

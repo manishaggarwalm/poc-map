@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'react-proptypes';
 import Tree from './tree';
 
-const Item = ({ expandAll, cKey, name, children, toggled, onClick, activeItem }) => {
+const Item = ({
+  expandAll, item, isMulti, onClick, activeItem, 
+}) => {
+  const {
+    cKey, name, children = [], toggled, 
+  } = item;
   const [opened, setOpened] = useState(toggled);
-  const isActive = activeItem === cKey;
+  const isActive = isMulti ? activeItem.some((selectedItem) => selectedItem.cKey === cKey) : activeItem === cKey;
   const hasChildren = !!(children && children.length);
 
   const onArrowClick = (event) => {
@@ -14,7 +19,39 @@ const Item = ({ expandAll, cKey, name, children, toggled, onClick, activeItem })
 
   const onItemClick = (event) => {
     event.preventDefault();
-    onClick({ cKey, children, name, toggled });
+    onClick({
+      ...item,
+    });
+  };
+
+  const getAllChildren = (list) => {
+    const {
+      children, ...rest 
+    } = list;
+
+    if (children && children.length) {
+      children.forEach((element) => {
+        getAllChildren(element);
+      });
+    }
+
+    return rest;
+  };
+
+  const handleCheckboxClick = ({ target: { checked } }) => {
+    let selectedItem = {
+      ...item,
+    };
+
+    if (isMulti) {
+      selectedItem = [
+        {
+          ...item,
+        },
+        ...getAllChildren(item),
+      ];
+    }
+    onClick(selectedItem, checked);
   };
 
   return (
@@ -28,27 +65,37 @@ const Item = ({ expandAll, cKey, name, children, toggled, onClick, activeItem })
           </a>
         </div>
         <div className="nodeContent">
-          <a href="/" className="nodeContent-item" onClick={onItemClick}>
-            <span className="text">{name}</span>
-          </a>
+          {isMulti ? (
+            <label className="treeCheckbox">
+              <input type="checkbox" name={cKey} onChange={handleCheckboxClick} checked={isActive} />
+              <span className="text">{name}</span>
+            </label>
+          ) : (
+            <a href="/" className="nodeContent-item" onClick={onItemClick}>
+              <span className="text">{name}</span>
+            </a>
+          )}
         </div>
       </div>
-      {hasChildren && <Tree items={children} activeItem={activeItem} onClick={onClick} expandAll={expandAll} />}
+      {hasChildren && <Tree items={children} activeItem={activeItem} isMulti={isMulti} onClick={onClick} expandAll={expandAll} />}
     </li>
   );
 };
 
 const itemPropTypes = {
-  activeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   cKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  expandAll: PropTypes.bool,
   name: PropTypes.string,
-  onClick: PropTypes.func,
   toggled: PropTypes.bool,
 };
 
 itemPropTypes.children = PropTypes.arrayOf(PropTypes.shape(itemPropTypes));
 
-Item.propTypes = { ...itemPropTypes };
+Item.propTypes = {
+  activeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  expandAll: PropTypes.bool,
+  isMulti: PropTypes.bool,
+  item: PropTypes.shape(itemPropTypes),
+  onClick: PropTypes.func,
+};
 
 export default Item;

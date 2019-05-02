@@ -1,6 +1,5 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import {
-  FETCH_ORGANIZATIONS,
+import {FETCH_ORGANIZATIONS,
   fetchOrganizationsSuccess,
   fetchOrganizationsRequested,
   fetchOrganizationsFailure,
@@ -9,7 +8,8 @@ import {
   SELECT_ORGANIZATION,
   selectOrganizationSuccess,
   SELECT_ORGANIZATION_SUCCESS,
-} from '../actions/organizations';
+  MARK_ORGANIZATION,
+  markOrganizationSuccess} from '../actions/organizations';
 
 const callApi = async () => {
   try {
@@ -34,7 +34,9 @@ function* fetchOrganizations() {
 
     yield put(
       fetchOrganizationsSuccess({
-        activeOrganization: { ...updatedItems[0] },
+        activeOrganization: {
+          ...updatedItems[0],
+        },
         organizations: updatedItems,
       })
     );
@@ -48,9 +50,16 @@ function* viewOrganizationHandler({ payload }) {
 }
 
 function* selectOrganization({ payload }) {
-  const updatedItems = { ...payload, toggled: true };
+  const updatedItems = {
+    ...payload,
+    toggled: true,
+  };
 
   yield put(selectOrganizationSuccess(updatedItems));
+}
+
+function* markOrganization({ payload }) {
+  yield put(markOrganizationSuccess(payload));
 }
 
 export default function* rolesSaga() {
@@ -59,5 +68,6 @@ export default function* rolesSaga() {
     takeLatest(VIEW_ORGANIZATION, viewOrganizationHandler),
     takeLatest(SELECT_ORGANIZATION, selectOrganization),
     takeLatest(SELECT_ORGANIZATION_SUCCESS, viewOrganizationHandler),
+    takeLatest(MARK_ORGANIZATION, markOrganization),
   ]);
 }

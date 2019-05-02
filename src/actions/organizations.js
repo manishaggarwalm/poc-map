@@ -23,3 +23,9 @@ export const selectOrganization = createAction(SELECT_ORGANIZATION);
 
 export const SELECT_ORGANIZATION_SUCCESS = 'SELECT_ORGANIZATION_SUCCESS';
 export const selectOrganizationSuccess = createAction(SELECT_ORGANIZATION_SUCCESS);
+
+export const MARK_ORGANIZATION = 'MARK_ORGANIZATION';
+export const markOrganization = createAction(MARK_ORGANIZATION);
+
+export const MARK_ORGANIZATION_SUCCESS = 'MARK_ORGANIZATION_SUCCESS';
+export const markOrganizationSuccess = createAction(MARK_ORGANIZATION_SUCCESS);
